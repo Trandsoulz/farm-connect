@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { MONGO_URI } from "./envConfig";
+import { MONGO_URI } from "./envConfig.js";
 
 async function connectDB(maxRetries = 5, initialDelay = 5000) {
   let attempt = 0;
