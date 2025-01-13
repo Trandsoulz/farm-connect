@@ -4,6 +4,7 @@ import cors from "cors";
 import morgan from "morgan";
 import connectDB from "./src/config/dbConfig.js";
 import userRoute from "./src/routes/user.route.js";
+import User from "./src/models/user.model.js";
 
 const app = express();
 
