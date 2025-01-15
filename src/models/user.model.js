@@ -75,12 +75,12 @@ const buyerSchema = new mongoose.Schema(
             required: [true, 'Please add a password'],
             minLength: 8
          },
-    },
+  },
 
-    {
-        timestamps: true,
-    }
-)
+  {
+    timestamps: true,
+  }
+);
 
 // Models
 const Farmer = mongoose.model('Farmer', farmerSchema);
