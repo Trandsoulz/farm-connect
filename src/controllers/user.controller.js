@@ -1,17 +1,80 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import { Farmer, Buyer } from '../models/user.model';
+import { Farmer, Buyer } from '../models/user.model.js';
+import { JWT_SECRET } from '../config/envConfig.js';
 
-export const Signup = (req, res, next) => {
+export const SignupAsFarmer = async (req, res, next) => {
+
+  const user = req.body;
+
   try {
-    res.status(200).send({
+    // Check if all fields were inputted
+    if(!user.fullName || !user.email || !user.phoneNumber || !user.farmName || !user.farmLocation || !user.password) {
+      return res.status(400).send({
+        status : "fail",
+        message : "Input all fields"
+      })
+    }
+
+    // Create farmer in the DB
+    await Farmer.create(user);
+
+    // Sign token that'll be sent to the user 
+    const token = jwt.sign(
+      { id: user._id }, // include more details in the payload if necessary
+      JWT_SECRET, // Define JWT secret in .env
+      { expiresIn: '90d' } // Token expires in 1 hour
+    );
+
+    res.set('x-auth-token', token).status(201).send({
       status: "success",
-      message: "User signup functionality is working",
+      message: "Farmer successfully signed up",
     });
+
+
   } catch (error) {
+    console.error(error)
     res.status(500).send({
-      status: "fail",
-      message: "An error occured in the signup route",
+      status: "error",
+      message: "An error occured in the server",
+    });
+  }
+};
+
+export const SignupAsBuyer = async (req, res, next) => {
+
+  const user = req.body;
+
+  try {
+    // Check if all fields were inputted
+    if(!user.fullName || !user.email || !user.phoneNumber || !user.deliveryAddress || !user.password) {
+      return res.status(400).send({
+        status : "fail",
+        message : "Input all fields"
+      })
+    }
+
+    // Create farmer in the DB
+    await Farmer.create(user);
+
+    // Sign token that'll be sent to the user 
+    const token = jwt.sign(
+      { id: user._id }, // include more details in the payload if necessary
+      JWT_SECRET, // Define JWT secret in .env
+      { expiresIn: '90d' } // Token expires in 1 hour
+    );
+
+    res.set('x-auth-token', token).status(201).send({
+      status: "success",
+      message: "Buyer successfully signed up",
+    });
+
+
+  } catch (error) {
+    console.error(error)
+    res.status(500).send({
+      status: "error",
+      message: "An error occured in the server",
     });
   }
 };
@@ -49,37 +112,21 @@ export const Login = async (req, res, next) => {
 
     // Generate JWT token
     const token = jwt.sign(
-      { id: user._id, email: user.email }, // include more details in the payload if necessary
-      process.env.JWT_SECRET, // Define JWT secret in .env
-      { expiresIn: '1h' } // Token expires in 1 hour
+      { id: user._id }, // include more details in the payload if necessary
+      JWT_SECRET, // Define JWT secret in .env
+      { expiresIn: '90d' } // Token expires in 1 hour
     );
 
     // Send response with token
-    res.status(200).send({
+    res.set('x-auth-token', token).status(200).send({
       status: 'success',
       message: 'Login successful',
-      token,
     });
   } catch (error) {
     console.error(error);
     res.status(500).send({
-      status: 'fail',
-      message: 'An error occurred during login',
+      status: 'error',
+      message: 'An error occurred on the server',
     });
   }
 };
-
-// export const Login = (req, res, next) => {
-//   //login functionalities 
-//   try {
-//     res.status(200).send({
-//       status: "success",
-//       message: "User Login functionality is working",
-//     });
-//   } catch (error) {
-//     res.status(500).send({
-//       status: "fail",
-//       message: "An error occured in the signup route",
-//     });
-//   }
-// };

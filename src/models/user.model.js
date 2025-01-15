@@ -22,6 +22,11 @@ const farmerSchema = new mongoose.Schema(
       required: [true, "Please enter your farm Location"],
     },
 
+    role : {
+        type : String,
+        default : 'farmer',
+    },
+
     phoneNumber: {
       type: Number,
       require: [validator.isNumeric, "Please enter a valid number"],
@@ -49,7 +54,7 @@ const farmerSchema = new mongoose.Schema(
 farmerSchema.pre('save', async function (next) {
     if (!this.isModified('password')) return next();
   
-    this.password = await bcrypt.hash(this.password, 10); // Hash the password
+    this.password = await bcrypt.hash(this.password, 12); // Hash the password
     next();
   });
 
@@ -62,7 +67,12 @@ const buyerSchema = new mongoose.Schema(
       required: [true, "Full name is required"],
     },
 
-    delieveryAddress: {
+    role : {
+        type : String,
+        default : "buyer"
+    },
+
+    deliveryAddress: {
       type: String,
       required: [true, "Please enter address for delievery"],
     },
@@ -94,7 +104,7 @@ const buyerSchema = new mongoose.Schema(
 buyerSchema.pre('save', async function (next) {
     if (!this.isModified('password')) return next();
   
-    this.password = await bcrypt.hash(this.password, 10); // Hash the password
+    this.password = await bcrypt.hash(this.password, 12); // Hash the password
     next();
   });
 
