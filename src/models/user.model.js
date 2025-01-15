@@ -1,12 +1,30 @@
-// Create the user-model
-const mongoose = require('mongoose');
-const validator = require('validator');
+// Creating the Farmer and Buyer signup schema
+import mongoose from "mongoose";
+import validator from "validator";
 
-const userSchema = mongoose.Schema(
+
+// Schema for Farmer Signup page
+
+const farmerSchema = new mongoose.Schema(
     {
-        name: {
+        fullName: {
             type: String,
-            required: [true, 'User name is required'],
+            required: [true, 'Full name is required'],
+        },
+
+        farmName: {
+            type: String,
+            required: [true, 'Farm name is required'],
+        },
+
+        farmLocation: {
+            type: String,
+            required: [true, 'Please enter your farm Location'],
+        },
+
+        phoneNumber: {
+            type: Number,
+            require: [validator.isNumeric, "Please enter a valid number"]
         },
 
         email: {
@@ -20,11 +38,6 @@ const userSchema = mongoose.Schema(
             required: [true, 'Please add a password'],
             minLength: 8
          },
-         passwordConfirm: {
-            type: String,
-            required: [true, 'User password confirmation is required'],
-            minLength: 8
-         }
     },
 
     {
@@ -32,8 +45,46 @@ const userSchema = mongoose.Schema(
     }
 )
 
-const User = mongoose.model('User', userSchema);
+// Schema for Buyer Signup page
 
-export default User;
+const buyerSchema = new mongoose.Schema(
+    {
+        fullName: {
+            type: String,
+            required: [true, 'Full name is required'],
+        },
 
-// Both farmer and customer
+        delieveryAddress: {
+            type: String,
+            required: [true, 'Please enter address for delievery'],
+        },
+
+        phoneNumber: {
+            type: Number,
+            require: [validator.isNumeric, "Please enter a valid number"]
+        },
+
+        email: {
+            type: String,
+            required: [true, "User email is required"],
+            unique: true,
+            validate: [validator.isEmail, "Please enter a valid email"]
+        },
+        password: {
+            type: String,
+            required: [true, 'Please add a password'],
+            minLength: 8
+         },
+    },
+
+    {
+        timestamps: true,
+    }
+)
+
+// Models
+const Farmer = mongoose.model('Farmer', farmerSchema);
+const Buyer = mongoose.model('Buyer', buyerSchema);
+
+// Export Both Models
+export {Farmer, Buyer};
