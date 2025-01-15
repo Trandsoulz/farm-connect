@@ -1,19 +1,7 @@
 // Creating the Farmer and Buyer signup schema
 import mongoose from "mongoose";
 import validator from "validator";
-
-// Schema for User Login
-const userLoginSchema = new mongoose.Schema({
-  identifier: {
-    type: String,
-    required: [true, "Email or Phone Number is required"],
-  },
-  password: {
-    type: String,
-    required: [true, "Please enter your password"],
-    minLength: 8,
-  },
-});
+import bcrypt from 'bcryptjs';
 
 // Schema for Farmer Signup page
 
@@ -57,6 +45,14 @@ const farmerSchema = new mongoose.Schema(
   }
 );
 
+// Password hashing before saving (for Farmer schema)
+farmerSchema.pre('save', async function (next) {
+    if (!this.isModified('password')) return next();
+  
+    this.password = await bcrypt.hash(this.password, 10); // Hash the password
+    next();
+  });
+
 // Schema for Buyer Signup page
 
 const buyerSchema = new mongoose.Schema(
@@ -94,10 +90,17 @@ const buyerSchema = new mongoose.Schema(
   }
 );
 
+// Password hashing before saving (for Buyer schema)
+buyerSchema.pre('save', async function (next) {
+    if (!this.isModified('password')) return next();
+  
+    this.password = await bcrypt.hash(this.password, 10); // Hash the password
+    next();
+  });
+
 // Models
 const Farmer = mongoose.model("Farmer", farmerSchema);
 const Buyer = mongoose.model("Buyer", buyerSchema);
-const UserLogin = mongoose.model("UserLogin", userLoginSchema);
 
 // Export Both Models
-export { Farmer, Buyer, UserLogin };
+export { Farmer, Buyer };
