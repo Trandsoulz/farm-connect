@@ -9,7 +9,7 @@ export const SignupAsFarmer = async (req, res, next) => {
 
   try {
     // Check if all fields were inputted
-    if(!user.fullName || !user.email || !user.phoneNumber || !user.farmName || !user.farmLocation || !user.password) {
+    if(!user.fullName || !user.email || !user.phoneNumber || !user.farmName || !user.farmLocation || !user.password || !user.typeOfProduce) {
       return res.status(400).send({
         status : "fail",
         message : "Input all fields"

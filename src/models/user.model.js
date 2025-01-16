@@ -27,6 +27,10 @@ const farmerSchema = new mongoose.Schema(
         default : 'farmer',
     },
 
+    typeOfProduce : {
+        type : String,
+    },
+
     phoneNumber: {
       type: Number,
       require: [validator.isNumeric, "Please enter a valid number"],
