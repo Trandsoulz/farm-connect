@@ -55,7 +55,7 @@ export const SignupAsBuyer = async (req, res, next) => {
     }
 
     // Create farmer in the DB
-    await Farmer.create(user);
+    await Buyer.create(user);
 
     // Sign token that'll be sent to the user 
     const token = jwt.sign(
