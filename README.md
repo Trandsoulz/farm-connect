@@ -2,6 +2,7 @@
 Group 17 project
 
 # Api link ==> "https://farm-connect-c2ut.onrender.com"
+# GITHUB repo ==> "https://github.com/Trandsoulz/farm-connect"
 
 # Authentication routes
 
