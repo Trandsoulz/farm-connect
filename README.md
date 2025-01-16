@@ -7,7 +7,7 @@ Group 17 project
 # Authentication routes
 
 ==> POST REQ 
-const body = { fullName, email, phoneNumber, farmName, farmLocation, password }
+const body = { fullName, email, phoneNumber, typeOfProduce, farmName, farmLocation, password }
 
 'https://farm-connect-c2ut.onrender.com/api/v1/auth/signup/farmer' ===  route for farmer signup
 
