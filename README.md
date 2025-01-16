@@ -18,6 +18,6 @@ const body = { fullName, email, phoneNumber, deliveryAddress, password }
 'https://farm-connect-c2ut.onrender.com/api/v1/auth/signup/buyer' ===  route for buyer signup
 
 ==> POST REQ 
-const body = { email, phoneNummber, password }
+const body = { email, phoneNumber, password }
 
 'https://farm-connect-c2ut.onrender.com/api/v1/auth/login' ===  route for login for both farmer and buyer
