@@ -1,7 +1,7 @@
 import { promisify } from "util";
 import jwt from "jsonwebtoken";
 import { Farmer } from "../models/user.model.js";
-import { JWT_SECRET } from "../config/envConfig";
+import { JWT_SECRET } from "../config/envConfig.js";
 
 const protectRoute = async (req, res, next) => {
   let token;
