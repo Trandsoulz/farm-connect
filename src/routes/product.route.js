@@ -5,7 +5,7 @@ import upload from "../helpers/upload.js";
 
 const router = express.Router();
 
-router.post("/", protectRoute, upload("image"), AddProduct);
+router.post("/", protectRoute, upload.single("image"), AddProduct);
 router.get("/", GetProducts);
 router.get('/farmer', protectRoute, GetProductById )
 
