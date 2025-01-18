@@ -1,4 +1,4 @@
-import { uploadImagesFunctionSingle } from "../helpers/img";
+import { uploadImagesFunctionSingle } from "../helpers/img.js";
 import Product from "../models/product.model.js";
 
 export const AddProduct = async (req, res, next) => {
