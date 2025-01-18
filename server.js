@@ -4,6 +4,7 @@ import cors from "cors";
 import morgan from "morgan";
 import connectDB from "./src/config/dbConfig.js";
 import userRoute from "./src/routes/user.route.js";
+import productRoute from "./src/routes/product.route.js";
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.get("/", (req, res, next) => {
 
 // All routes should be defined here
 app.use("/api/v1/auth", userRoute);
+app.use("/api/v1/product", productRoute);
 
 app.all("*", (req, res, next) => {
   res.status(404).send({
